@@ -1,14 +1,16 @@
 #!/bin/bash
 
-source ./config.properties
+cmd="cd $@ &&"
+if [ $# == 0 ];then
+    cmd=""
+fi
 docker run --rm -it \
     -u $UID:$UID \
     -e XDG_CACHE_HOME=/tmp/.cache \
     -e GOPROXY=https://goproxy.cn \
-    -e CGO_ENABLED=0 \
-    -e GOOS=${@: -1} \
-    -e GOARCH=amd64 \
     -v $PWD:/srv/app \
     -v $PWD/packages:/go \
     -w /srv/app \
-    golang:alpine go build ${@:1:$(($#-1))}
+    -p 8080:8080 \
+    golang:alpine \
+    /bin/sh -c "$cmd air" 
