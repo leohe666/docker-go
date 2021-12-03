@@ -2,6 +2,7 @@
 
 docker run --rm -it \
     -u $UID:$UID \
+    -e TZ="Asia/Shanghai" \
     -e XDG_CACHE_HOME=/tmp/.cache \
     -e GOPROXY=https://goproxy.cn \
     -v $PWD:/srv/app \
